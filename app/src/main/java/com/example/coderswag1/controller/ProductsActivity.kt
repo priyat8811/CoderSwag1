@@ -11,6 +11,7 @@ import com.example.coderswag1.adapter.ProductAdapter
 import com.example.coderswag1.model.Product
 import com.example.coderswag1.service.DataService
 import com.example.coderswag1.utilities.EXTRA_CATEGORY
+import com.example.coderswag1.utilities.EXTRA_PRODUCT
 import kotlinx.android.synthetic.main.activity_main.*
 import kotlinx.android.synthetic.main.activity_products.*
 
@@ -24,15 +25,14 @@ class ProductsActivity : AppCompatActivity() {
         category = intent.getStringExtra(EXTRA_CATEGORY)
         // Toast.makeText(this,"selected text $category",Toast.LENGTH_SHORT).show()
         selectedProducts = DataService.getProduct(category)
-        mProductAdapter = ProductAdapter(this, selectedProducts){ selectedProducts->
+        mProductAdapter = ProductAdapter(this, selectedProducts){ Product->
             val productDetailIntent = Intent(this, ProductDetailsActivity::class.java)
-            productDetailIntent.putExtra(EXTRA_CATEGORY, selectedProducts.title)
+            productDetailIntent.putExtra(EXTRA_PRODUCT, Product)
             startActivity(productDetailIntent)
         }
         productRecycler.adapter = mProductAdapter
 
         val layoutManager = GridLayoutManager(this, 2)
         productRecycler.layoutManager = layoutManager
-        //categoryRecyclerAdapter.setHasFixedSize(true)
     }
 }
